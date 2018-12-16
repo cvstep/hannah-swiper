@@ -1,0 +1,881 @@
+openapi: 3.0.0
+info:
+  version: 0.1.0
+  title: Hannah.BJ
+  description: |
+    Mock Data Interface for Hannah.BJ web assets
+
+    ## Authentication
+
+    Mock logon  `c35a13468062a440d210e9c6e9daaa8f000152cb`
+
+    ## HTTP Verbs
+    [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer).
+    Every endpoint supports one or more of four different http verbs.
+
+    GET requests fetch information about an object
+    POST requests create objects
+    PUT requests update objects
+    DELETE requests will delete objects.
+    GET, PUT, DELETE, HEAD, and PATCH actions should be idempotent.
+  contact:
+    name: Charles
+    url: 'http://charlesvstephens.me'
+  license:
+    name: UNLICENSED
+    url: 'http://charlesvstephens.me'
+servers:
+  - url: 'http://localhost:3000'
+    description: localhost
+  - url: '{schemes}://{subdomain}.site.com'
+    description: The main prod server
+    variables:
+      schemes:
+        enum:
+          - http
+          - https
+        default: https
+      subdomain:
+        default: production
+externalDocs:
+  description: Find more info here
+  url: 'http://google.com'
+components:
+  parameters:
+    uid:
+      name: uid
+      in: path
+      description: A unique identifier is created for each user.
+      required: true
+      schema:
+        type: integer
+        format: int64
+    username:
+      name: username
+      in: path
+      description: >-
+        When a user is created they either pick a username or if it is a system
+        generated account the username is created automatically from their first
+        and last names.
+      required: true
+      schema:
+        type: string
+    userInfo:
+      name: userinfo
+      in: path
+      description: >-
+        The userinfo object is either the email address of the user or the
+        username of the user.
+      required: true
+      schema:
+        type: string
+  responses:
+    '400':
+      description: 400 Bad Request
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+    '401':
+      description: Unauthorized
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+    '404':
+      description: Item Not Found
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+    '405':
+      description: Validation exception
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+    '429':
+      description: Rate limit exceeded
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+    '500':
+      description: Internal server error
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+    '503':
+      description: Service unavailable
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+    NotFound:
+      description: Entity not found.
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+    IllegalInput:
+      description: Illegal input for operation.
+    GeneralError:
+      description: General Error
+      content:
+        '*/*':
+          schema:
+            $ref: '#/components/schemas/Default'
+  requestBodies:
+    UserProfile:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserProfile'
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/UserProfile'
+      description: URL-encoded form of User data.
+      required: true
+  schemas:
+    Address:
+      type: object
+      required:
+        - line1
+        - city
+        - country
+        - type
+      properties:
+        line1:
+          type: string
+        line2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        countryCode:
+          type: string
+        zip:
+          type: string
+        type:
+          type: string
+          enum:
+            - home
+            - billing
+            - po
+    UserPassword:
+      type: object
+      properties:
+        oldPassword:
+          type: string
+        newPassword:
+          type: string
+    Default:
+      description: Default
+      type: object
+      required:
+        - message
+        - code
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+          minimum: 100
+          maximum: 600
+    Order:
+      type: object
+      properties:
+        cartSession:
+          type: string
+        clientIP:
+          type: string
+        clientBrowser:
+          type: string
+        cartTime:
+          format: date-time
+          type: string
+        version:
+          format: int32
+          default: 2
+          type: integer
+        oracleSession:
+          type: string
+        action:
+          type: string
+        shippingAmount:
+          format: double
+          type: number
+        shippingMethod:
+          type: string
+        baseTaxAmount:
+          format: double
+          type: number
+        referral:
+          type: string
+        payment:
+          $ref: '#/components/schemas/Payment'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Item'
+        couponCode:
+          type: string
+        orderId:
+          format: int32
+          type: integer
+        billingAddress:
+          type: object
+          items:
+            $ref: '#/components/schemas/Address'
+        shippingAddress:
+          type: object
+          items:
+            $ref: '#/components/schemas/Address'
+    OrderPayment:
+      type: object
+      properties:
+        orderNumber:
+          description: The order identifier
+          format: int32
+          type: integer
+        paid:
+          description: A boolean regarding whether the order has been paid in full
+          type: boolean
+    Payment:
+      type: object
+      properties:
+        authId:
+          type: string
+        ccLast4:
+          format: int32
+          type: integer
+        ccType:
+          type: string
+        transId:
+          type: string
+        method:
+          type: string
+        grandTotal:
+          format: double
+          type: number
+    Item:
+      type: object
+      properties:
+        price:
+          format: double
+          type: number
+        discountAmount:
+          format: double
+          type: number
+        quantityOrdered:
+          format: int32
+          type: integer
+        sku:
+          type: string
+        declined:
+          format: int32
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        eventCode:
+          type: string
+        license:
+          type: string
+        state:
+          type: string
+        typeId:
+          format: int32
+          type: integer
+    User:
+      type: object
+      title: User
+      description: This object contains information for a single user.
+      properties:
+        UserProfile:
+          $ref: '#/components/schemas/UserProfile'
+        userMedia:
+          $ref: '#/components/schemas/UserMedia'
+        ice:
+          $ref: '#/components/schemas/ICEForm'
+    Keywords:
+      type: array
+      description: An array of keywords for the user archive
+      items:
+        type: string
+    UserMedia:
+      type: object
+      description: The data form used to create a new user or update the core user data
+      properties:
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+        videos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Video'
+    Image:
+      type: object
+      description: The data and metadata for image
+      properties:
+        title:
+          type: string
+    Video:
+      type: object
+      description: The data and metadata for image
+      properties:
+        title:
+          type: string
+    UserProfile:
+      type: object
+      description: The data form used to create a new user or update the core user data
+      properties:
+        userId:
+          format: int32
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+          enum:
+            - Female
+            - Male
+            - Not Specified
+        prefix:
+          type: string
+          default: 'null'
+          enum:
+            - 'null'
+            - Ms
+            - Mr
+            - Mrs
+            - Lic
+            - Dr
+            - Ing
+            - Sr
+            - C.P
+            - Act
+            - Sra
+            - Srta
+        firstName:
+          type: string
+          pattern: '^[a-zA-Z''''-''\s]{1,40}$'
+        lastName:
+          type: string
+          pattern: '^[a-zA-Z''''-''\s]{1,40}$'
+        suffix:
+          type: string
+          enum:
+            - 'null'
+            - Jr.
+            - III
+            - Sr.
+            - II
+            - IV
+            - Esq.
+            - V
+            - VI
+        namePreference:
+          type: string
+        birthday:
+          format: date
+          type: string
+        shippingAddress:
+          $ref: '#/components/schemas/Address'
+        billingAddress:
+          $ref: '#/components/schemas/Address'
+        businessPhone:
+          type: string
+        homePhone:
+          type: string
+        employerName:
+          type: string
+    ICEForm:
+      type: object
+      title: In Case of Emergency Form
+      description: The form containing the emergency information for a user
+      properties:
+        participantName:
+          format: int32
+          type: integer
+        eventAttending:
+          type: string
+        eventAddressType:
+          type: string
+          enum:
+            - Conference Hotel
+            - Other Hotel or Residence
+        address:
+          $ref: '#/components/schemas/Address'
+        phoneNumber:
+          type: string
+        emergencyContact:
+          type: object
+          description: The emergency contact for the user.
+          properties:
+            fullName:
+              type: string
+            relationship:
+              description: >-
+                The relationship the user has to the emergency contact, such as
+                father, son, friend, et cetera.
+              type: string
+            address:
+              $ref: '#/components/schemas/Address'
+            phoneNumber:
+              type: string
+            medicationAllergies:
+              type: array
+              description: An array of medications the user is allergic too.
+              items:
+                type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      description: |
+        HTTPS Basic Authentication. Should only be over `HTTPS`
+        ** User Name and Password**
+        * User Name: `user`
+        * Password: `pass`
+      scheme: basic
+    apiKeyAuth:
+      type: apiKey
+      description: api
+      name: apiKey
+      in: query
+      x-authorize: security/apiKey.js
+tags:
+  - name: Authentication
+    description: ''
+  - name: User
+    description: ''
+paths:
+  /states:
+    get:
+      tags:
+        - Static
+      summary: Get list of states
+      description: |
+        This function returns the list of states
+        webinars
+      operationId: getStates
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  states:
+                    type: array
+                    items:
+                      type: string
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+  /countries:
+    get:
+      tags:
+        - Static
+      summary: Get list of countries and country codes
+      description: |
+        This function returns the list of countries and country codes
+      operationId: getCountries
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    countryName:
+                      type: string
+                    countryCode:
+                      type: string
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+  /countries/regions:
+    get:
+      tags:
+        - Static
+      summary: Get list of country regions
+      description: |
+        This function returns the list of countries and regions
+      operationId: getCountryRegions
+      parameters:
+        - name: countryCode
+          in: query
+          description: >-
+            The country code to filter the results with, if excluded return all
+            the regions for all countries.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    regionId:
+                      type: string
+                    stateCode:
+                      type: string
+                    stateName:
+                      type: string
+                    countryCode:
+                      type: string
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+  /user:
+    post:
+      tags:
+        - User
+      summary: Create new user
+      description: >
+        Creates new user. Perform necessary business operations like sending
+        welcome email.
+      operationId: createuser
+      responses:
+        '200':
+          description: |
+            **Return Value:**
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+      requestBody:
+        $ref: '#/components/requestBodies/UserProfile'
+  '/user/{uid}':
+    get:
+      tags:
+        - User
+      security:
+        - apiKeyAuth: []
+      summary: Get User data by uid
+      operationId: getUserData
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+    put:
+      tags:
+        - User
+      security:
+        - apiKeyAuth: []
+      summary: Update user data by uid
+      operationId: updateUserData
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        $ref: '#/components/requestBodies/UserProfile'
+  '/user/{uid}/media':
+    post:
+      summary: Uploads media for user.
+      security:
+        - apiKeyAuth: []
+      operationId: postUserMedia
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/UserMedia'
+        default:
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Default'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                upimage:
+                  description: The image to upload.
+                  type: string
+                  format: binary
+    get:
+      summary: Gets media for user.
+      security:
+        - apiKeyAuth: []
+      operationId: getUserMedia
+      tags:
+        - User
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMedia'
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+  /user/auth:
+    post:
+      description: Log the user on and returns the apiKey.
+      tags:
+        - Authentication
+      summary: Login user by userinfo and password
+      operationId: authorize
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiKey:
+                    type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userInfo:
+                  description: Either the user username or the user email address
+                  type: string
+                password:
+                  type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                userInfo:
+                  description: Either the user username or the user email address
+                  type: string
+                password:
+                  type: string
+        description: userinfo and password in plain text.
+        required: true
+    get:
+      description: >-
+        This function is designed to be used to logon users from links in emails
+        or other marketing materials. It is rather unsafe, but is included for
+        historical reasons.
+      tags:
+        - Authentication
+      security:
+        - apiKeyAuth: []
+      summary: Get userId by apiKey
+      operationId: getPIdByapiKey
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiKey:
+                    type: string
+                  userId:
+                    type: integer
+                    format: int32
+  /user/auth/reset-password:
+    post:
+      tags:
+        - Authentication
+      summary: Start password reset process by user email.
+      operationId: resetPassword
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userEmail:
+                  type: string
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                userEmail:
+                  type: string
+        description: User password reset form.
+        required: true
+  '/user/{uid}/password':
+    put:
+      tags:
+        - Authentication
+      security:
+        - apiKeyAuth: []
+      summary: Update user password by uid
+      operationId: putPassword
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserPassword'
+        description: Password Form.
+        required: true
+  '/user/{uid}/orders':
+    post:
+      tags:
+        - User
+      security:
+        - apiKeyAuth: []
+      summary: Create new order for uid
+      description: |
+        It includes the products ordered, the user data for
+        the product, if required. It also sends the payment, billing
+        and/or shipping information.
+      operationId: postOrder
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Order'
+        description: Data for Order
+        required: true
+  '/user/{uid}/ice':
+    get:
+      tags:
+        - User
+      security:
+        - apiKeyAuth: []
+      summary: Get ICE form data by uid
+      operationId: getICEForm
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICEForm'
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+  '/user/{uid}/registered':
+    get:
+      tags:
+        - Register Others
+      security:
+        - apiKeyAuth: []
+      summary: Get registered user by uid
+      operationId: getRegistereduser
+      parameters:
+        - $ref: '#/components/parameters/uid'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+        default:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Default'
+

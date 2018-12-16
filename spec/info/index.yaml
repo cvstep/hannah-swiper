@@ -1,0 +1,25 @@
+version: '0.1.0'
+title: Hannah.BJ
+description: |
+  Mock Data Interface for Hannah.BJ web assets
+
+  ## Authentication
+
+  Mock logon  `c35a13468062a440d210e9c6e9daaa8f000152cb`
+
+  ## HTTP Verbs
+  [RESTful](http://en.wikipedia.org/wiki/Representational_state_transfer).
+  Every endpoint supports one or more of four different http verbs.
+
+  GET requests fetch information about an object
+  POST requests create objects
+  PUT requests update objects
+  DELETE requests will delete objects.
+  GET, PUT, DELETE, HEAD, and PATCH actions should be idempotent.
+
+contact:
+  name: Charles
+  url: http://charlesvstephens.me
+license:
+  name: UNLICENSED
+  url: http://charlesvstephens.me

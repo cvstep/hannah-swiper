@@ -1,0 +1,26 @@
+uid:
+  name: uid
+  in: path
+  description: A unique identifier is created for each user.
+  required: true
+  schema:
+    type: integer
+    format: int64
+username:
+  name: username
+  in: path
+  description:
+    When a user is created they either pick a username or if it is a system
+    generated account the username is created automatically from their first and last names.
+  required: true
+  schema:
+    type: string
+userInfo:
+  name: userinfo
+  in: path
+  description:
+    The userinfo object is either the email address of the user or the
+    username of the user.
+  required: true
+  schema:
+    type: string

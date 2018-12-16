@@ -1,0 +1,50 @@
+Address:
+  type: object
+  required:
+    - line1
+    - city
+    - country
+    - type
+  properties:
+    line1:
+      type: string
+    line2:
+      type: string
+    city:
+      type: string
+    state:
+      type: string
+    country:
+      type: string
+    countryCode:
+        type: string
+    zip:
+      type: string
+    type:
+      type: string
+      enum:
+      - home
+      - billing
+      - po
+
+UserPassword:
+  type: object
+  properties:
+    oldPassword:
+      type: string
+    newPassword:
+      type: string
+
+Default:
+  description: Default
+  type: object
+  required:
+    - message
+    - code
+  properties:
+    message:
+      type: string
+    code:
+      type: integer
+      minimum: 100
+      maximum: 600

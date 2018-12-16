@@ -1,0 +1,21 @@
+logs/**/*
+!.gitkeep
+.ssl
+tmp
+.DS_Store
+.idea
+*.log
+*.[oa]
+*.sublime-project
+*.sublime-workspace
+coverage/
+node_modules/
+bower_components/
+.tmp/
+.env
+# Elastic Beanstalk Files
+
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+Questions.txt

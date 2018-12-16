@@ -1,0 +1,108 @@
+Order:
+  type: object
+  properties:
+    cartSession:
+      type: string
+    clientIP:
+      type: string
+    clientBrowser:
+      type: string
+    cartTime:
+      format: date-time
+      type: string
+    version:
+      format: int32
+      default: 2
+      type: integer
+    oracleSession:
+      type: string
+    action:
+      type: string
+    shippingAmount:
+      format: double
+      type: number
+    shippingMethod:
+      type: string
+    baseTaxAmount:
+      format: double
+      type: number
+    referral:
+      type: string
+    payment:
+      $ref: '#/components/schemas/Payment'
+    items:
+      type: array
+      items:
+        $ref: '#/components/schemas/Item'
+    couponCode:
+      type: string
+    orderId:
+      format: int32
+      type: integer
+    billingAddress:
+      type: object
+      items:
+        $ref: '#/components/schemas/Address'
+    shippingAddress:
+      type: object
+      items:
+        $ref: '#/components/schemas/Address'
+OrderPayment:
+  type: object
+  properties:
+    orderNumber:
+      description: The order identifier
+      format: int32
+      type: integer
+    paid:
+      description: A boolean regarding whether the order has been paid in full
+      type: boolean
+
+Payment:
+  type: object
+  properties:
+    authId:
+      type: string
+    ccLast4:
+      format: int32
+      type: integer
+    ccType:
+      type: string
+    transId:
+      type: string
+    method:
+      type: string
+    grandTotal:
+      format: double
+      type: number
+Item:
+  type: object
+  properties:
+    price:
+      format: double
+      type: number
+    discountAmount:
+      format: double
+      type: number
+    quantityOrdered:
+      format: int32
+      type: integer
+    sku:
+      type: string
+    # CE Below
+    declined:
+      format: int32
+      type: integer
+    firstName:
+      type: string
+    lastName:
+      type: string
+    eventCode:
+      type: string
+    license:
+      type: string
+    state:
+      type: string
+    typeId:
+      format: int32
+      type: integer

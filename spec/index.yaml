@@ -1,0 +1,89 @@
+openapi: "3.0.0"
+info:
+  $ref: ./info.yaml
+#################################################
+#                  Servers                   #
+#################################################
+servers:
+  - url: http://localhost:3000
+    description: localhost
+  - url: '{schemes}://{subdomain}.site.com'
+    description: The main prod server
+    variables:
+      schemes:
+        enum:
+          - http
+          - https
+        default: https
+      subdomain:
+        default: production
+
+
+#################################################
+#                  externalDocs                 #
+#################################################
+externalDocs:
+  description: Find more info here
+  url: http://google.com
+#################################################
+#                  Components                   #
+#################################################
+components:
+  parameters:
+    $ref: './components/parameters.yaml'
+  responses:
+    $ref: './components/responses.yaml'
+  requestBodies:
+    UserProfile:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserProfile'
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/UserProfile'
+      description: URL-encoded form of User data.
+      required: true
+  schemas:
+    $ref: ./schemas.yaml
+
+#################################################
+#                  Security                     #
+#################################################
+  securitySchemes:
+    basicAuth:
+      type: http
+      description: |
+        HTTPS Basic Authentication. Should only be over `HTTPS`
+        ** User Name and Password**
+        * User Name: `user`
+        * Password: `pass`
+      scheme: basic
+    apiKeyAuth:
+      type: apiKey
+      description: api
+      name: apiKey
+      in: query
+      x-authorize: security/apiKey.js
+
+#################################################
+#                  Tags                         #
+#################################################
+tags:
+  - name: Authentication
+    description: ''
+  - name: User
+    description: ''
+
+
+#################################################
+#                  Responses                    #
+#################################################
+
+
+
+#################################################
+#                Paths                          #
+#################################################
+paths:
+  $ref: ./paths.yaml

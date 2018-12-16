@@ -1,0 +1,59 @@
+{
+  "name": "Hannah.bj",
+  "version": "0.1.0",
+  "description": "Data services for hannah-swiper web assets",
+  "main": "./server",
+  "license": "UNLICENSED",
+  "author": "Charles Stephens",
+  "email": "charlesvstephens@gmail.com",
+  "contributors": [],
+  "engines": {
+    "node": "8.9.4"
+  },
+  "private": true,
+  "scripts": {
+    "test": "tape 'tests/**/*.js'",
+    "cover": "istanbul cover ./node_modules/tape/bin/tape 'tests/**/*.js'",
+    "globalNpm": "npm install grunt yo -g"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "errorhandler": "^1.5.0",
+    "express": "^4.0.0",
+    "express-openapi": "^3.5.0",
+    "lodash": "^4.13.1",
+    "method-override": "^2.3.7",
+    "mongoose": "^5.3.16",
+    "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0",
+    "passport-localapikey": "0.0.3",
+    "swagger-ui-dist": "^3.20.2"
+    },
+  "devDependencies": {
+    "eslint": "^3.13.1",
+    "dotenv": "^4.0.0",
+    "generator-swaggerize": "^3.1.0",
+    "grunt": "^1.0.1",
+    "grunt-concurrent": "^2.3.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-nodemon": "^0.5.4",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-newer": "^1.2.0",
+    "grunt-shell": "^2.1.0",
+    "is-my-json-valid": "^2.13.1",
+    "istanbul": "~0.4.3",
+    "js-yaml": "^3.2.6",
+    "json-refs": "^2.1.6",
+    "load-grunt-configs": "^1.0.0",
+    "load-grunt-tasks": "^3.5.2",
+    "swagger-parser": "^3.4.1",
+    "tape": "^4.6.3",
+    "time-grunt": "^1.4.0"
+  }
+}

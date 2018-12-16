@@ -1,0 +1,56 @@
+'400':
+  description: 400 Bad Request
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'
+'401':
+  description: Unauthorized
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'
+'404':
+  description: Item Not Found
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'
+'405':
+  description: Validation exception
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'
+'429':
+  description: Rate limit exceeded
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'
+'500':
+  description: Internal server error
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'
+'503':
+  description: Service unavailable
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'
+NotFound:
+  description: Entity not found.
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'
+IllegalInput:
+  description: Illegal input for operation.
+GeneralError:
+  description: General Error
+  content:
+    '*/*':
+      schema:
+        $ref: '#/components/schemas/Default'

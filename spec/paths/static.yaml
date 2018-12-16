@@ -1,0 +1,96 @@
+/states:
+  get:
+    tags:
+      - Static
+    summary: Get list of states
+    description: |
+      This function returns the list of states
+      webinars
+    operationId: getStates
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                states:
+                  type: array
+                  items:
+                    type: string
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'
+/countries:
+  get:
+    tags:
+      - Static
+    summary: Get list of countries and country codes
+    description: |
+      This function returns the list of countries and country codes
+    operationId: getCountries
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  countryName:
+                    type: string
+                  countryCode:
+                    type: string
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'
+/countries/regions:
+  get:
+    tags:
+      - Static
+    summary: Get list of country regions
+    description: |
+      This function returns the list of countries and regions
+    operationId: getCountryRegions
+    parameters:
+      - name: countryCode
+        in: query
+        description: >-
+          The country code to filter the results with, if excluded return all
+          the regions for all countries.
+        required: false
+        schema:
+          type: string
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  regionId:
+                    type: string
+                  stateCode:
+                    type: string
+                  stateName:
+                    type: string
+                  countryCode:
+                    type: string
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'

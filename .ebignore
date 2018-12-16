@@ -1,0 +1,45 @@
+logs/**/*
+documentation/
+test/
+dump/
+.editorconfig
+
+grunt/
+Gruntfile.js
+.directory
+README.md
+.eslintrc.yaml
+/**/.*.docx
+*.sublime-workspace
+*.sublime-project
+tmp
+.tmp
+.DS_Store
+.idea
+*.xml
+*.log
+*.[oa]
+.env
+# Server-specific data
+/data
+# Server-specific temporary files
+temp
+# User-uploaded content in local test environment, we'll use S3 instead
+# public/uploads
+# These are symlinks, we'll use asset bundles instead
+public/modules
+# We'll minify these assets separately during deployment
+public/apos-minified
+# git-related, not relevant to deploy
+.git
+.gitignore
+!.gitkeep
+# 'npm install' runs as part of deployment to get the right architecture
+node_modules
+
+# Elastic Beanstalk Files
+
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+

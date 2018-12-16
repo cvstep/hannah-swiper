@@ -1,0 +1,326 @@
+/user:
+  post:
+    tags:
+      - User
+    summary: Create new user
+    description: >
+      Creates new user. Perform necessary business operations like sending
+      welcome email.
+    operationId: createuser
+    responses:
+      '200':
+        description: |
+          **Return Value:**
+        content:
+          application/json:
+            schema:
+              type: object
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'
+    requestBody:
+      $ref: '#/components/requestBodies/UserProfile'
+
+'/user/{uid}':
+  get:
+    tags:
+      - User
+    security:
+      - apiKeyAuth: []
+    summary: Get User data by uid
+    operationId: getUserData
+    parameters:
+      - $ref: '#/components/parameters/uid'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'
+  put:
+    tags:
+      - User
+    security:
+      - apiKeyAuth: []
+    summary: Update user data by uid
+    operationId: updateUserData
+    parameters:
+      - $ref: '#/components/parameters/uid'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+    requestBody:
+      $ref: '#/components/requestBodies/UserProfile'
+'/user/{uid}/media':
+  post:
+    summary: Uploads media for user.
+    security:
+      - apiKeyAuth: []
+    operationId: postUserMedia
+    tags:
+      - User
+    parameters:
+      - $ref: '#/components/parameters/uid'
+    responses:
+      '200':
+        description: OK
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/UserMedia'
+      default:
+        description: OK
+        content:
+          '*/*':
+            schema:
+              $ref: '#/components/schemas/Default'
+    requestBody:
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              upimage:
+                description: The image to upload.
+                type: string
+                format: binary
+  get:
+    summary: Gets media for user.
+    security:
+      - apiKeyAuth: []
+    operationId: getUserMedia
+    tags:
+      - User
+    parameters:
+      - $ref: '#/components/parameters/uid'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserMedia'
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'
+
+/user/auth:
+  post:
+    description: Log the user on and returns the apiKey.
+    tags:
+      - Authentication
+    summary: Login user by userinfo and password
+    operationId: authorize
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                apiKey:
+                  type: string
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userInfo:
+                description: Either the user username or the user email address
+                type: string
+              password:
+                type: string
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            properties:
+              userInfo:
+                description: Either the user username or the user email address
+                type: string
+              password:
+                type: string
+      description: userinfo and password in plain text.
+      required: true
+  get:
+    description: >-
+      This function is designed to be used to logon users from links in emails
+      or other marketing materials. It is rather unsafe, but is included for
+      historical reasons.
+    tags:
+      - Authentication
+    security:
+      - apiKeyAuth: []
+    summary: Get userId by apiKey
+    operationId: getPIdByapiKey
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                apiKey:
+                  type: string
+                userId:
+                  type: integer
+                  format: int32
+/user/auth/reset-password:
+  post:
+    tags:
+      - Authentication
+    summary: Start password reset process by user email.
+    operationId: resetPassword
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userEmail:
+                type: string
+        application/x-www-form-urlencoded:
+          schema:
+            type: object
+            properties:
+              userEmail:
+                type: string
+      description: User password reset form.
+      required: true
+'/user/{uid}/password':
+  put:
+    tags:
+      - Authentication
+    security:
+      - apiKeyAuth: []
+    summary: Update user password by uid
+    operationId: putPassword
+    parameters:
+      - $ref: '#/components/parameters/uid'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserPassword'
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/UserPassword'
+      description: Password Form.
+      required: true
+'/user/{uid}/orders':
+  post:
+    tags:
+      - User
+    security:
+      - apiKeyAuth: []
+    summary: Create new order for uid
+    description: |
+      It includes the products ordered, the user data for
+      the product, if required. It also sends the payment, billing
+      and/or shipping information.
+    operationId: postOrder
+    parameters:
+      - $ref: '#/components/parameters/uid'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Order'
+        application/x-www-form-urlencoded:
+          schema:
+            $ref: '#/components/schemas/Order'
+      description: Data for Order
+      required: true
+'/user/{uid}/ice':
+  get:
+    tags:
+      - User
+    security:
+      - apiKeyAuth: []
+    summary: Get ICE form data by uid
+    operationId: getICEForm
+    parameters:
+      - $ref: '#/components/parameters/uid'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ICEForm'
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'
+'/user/{uid}/registered':
+  get:
+    tags:
+      - Register Others
+    security:
+      - apiKeyAuth: []
+    summary: Get registered user by uid
+    operationId: getRegistereduser
+    parameters:
+      - $ref: '#/components/parameters/uid'
+    responses:
+      '200':
+        description: OK
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+      default:
+        description: OK
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Default'
