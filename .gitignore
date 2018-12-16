@@ -10,6 +10,7 @@ tmp
 *.sublime-workspace
 coverage/
 node_modules/
+
 bower_components/
 .tmp/
 .env

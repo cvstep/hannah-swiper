@@ -14,7 +14,8 @@
   "scripts": {
     "test": "tape 'tests/**/*.js'",
     "cover": "istanbul cover ./node_modules/tape/bin/tape 'tests/**/*.js'",
-    "globalNpm": "npm install grunt yo -g"
+    "globalNpm": "npm install grunt yo -g",
+    "postinstall": "cd lib/swagmock/ && npm install"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -32,7 +33,7 @@
     "passport-local": "^1.0.0",
     "passport-localapikey": "0.0.3",
     "swagger-ui-dist": "^3.20.2"
-    },
+  },
   "devDependencies": {
     "eslint": "^3.13.1",
     "dotenv": "^4.0.0",

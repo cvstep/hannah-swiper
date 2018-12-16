@@ -37,6 +37,8 @@ public/apos-minified
 # 'npm install' runs as part of deployment to get the right architecture
 node_modules
 
+
+/spec
 # Elastic Beanstalk Files
 
 .elasticbeanstalk/*
