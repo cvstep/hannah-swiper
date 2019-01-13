@@ -1,5 +1,5 @@
 {
-  "name": "Eupraxia API",
+  "name": "eupraxia-api",
   "version": "0.1.0",
   "description": "Data services for eupraxia",
   "main": "./server",
