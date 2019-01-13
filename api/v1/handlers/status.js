@@ -1,19 +1,16 @@
 'use strict';
-var dataProvider = require('../data/states.js');
+var dataProvider = require('../data/status.js');
 /**
  * Operations on /states
  */
 module.exports = {
-    /**
-     * summary: Get list of states
-     * description: This function returns the list of states
-webinars
+    /*
 
-     * parameters: 
+     * parameters:
      * produces: application/json
      * responses: 200, default
      */
-    get: function getStates(req, res, next) {
+    get: function getStatus(req, res, next) {
         /**
          * Get the data for response 200
          * For response `default` status 200 is used.

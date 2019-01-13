@@ -1,12 +1,13 @@
-/states:
+/status:
   get:
     tags:
       - Static
-    summary: Get list of states
+    summary: Health check endpoint
     description: |
-      This function returns the list of states
-      webinars
-    operationId: getStates
+      This function returns health check data
+    operationId: getStatus
+    security:
+      - booAuth: []
     responses:
       '200':
         description: OK
@@ -15,10 +16,8 @@
             schema:
               type: object
               properties:
-                states:
-                  type: array
-                  items:
-                    type: string
+                status:
+                  type: object
       default:
         description: OK
         content:

@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
   version: 0.1.0
-  title: Hannah.BJ
+  title: Eupraxia-API
   description: |
-    Mock Data Interface for Hannah.BJ web assets
+    Mock Data Interface for euraxia web assets
 
     ## Authentication
 
@@ -24,19 +24,6 @@ info:
   license:
     name: UNLICENSED
     url: 'http://charlesvstephens.me'
-servers:
-  - url: 'http://localhost:3000'
-    description: localhost
-  - url: '{schemes}://{subdomain}.site.com'
-    description: The main prod server
-    variables:
-      schemes:
-        enum:
-          - http
-          - https
-        default: https
-      subdomain:
-        default: production
 externalDocs:
   description: Find more info here
   url: 'http://google.com'
@@ -449,24 +436,24 @@ components:
     apiKeyAuth:
       type: apiKey
       description: api
-      name: apiKey
+      name: apiKeyAuth
       in: query
-      x-authorize: security/apiKey.js
 tags:
   - name: Authentication
     description: ''
   - name: User
     description: ''
 paths:
-  /states:
+  /status:
     get:
       tags:
         - Static
-      summary: Get list of states
+      summary: Health check endpoint
       description: |
-        This function returns the list of states
-        webinars
-      operationId: getStates
+        This function returns health check data
+      operationId: getStatus
+      security:
+        - booAuth: []
       responses:
         '200':
           description: OK
@@ -475,10 +462,8 @@ paths:
               schema:
                 type: object
                 properties:
-                  states:
-                    type: array
-                    items:
-                      type: string
+                  status:
+                    type: object
         default:
           description: OK
           content:
@@ -645,7 +630,7 @@ paths:
                 $ref: '#/components/schemas/Default'
       requestBody:
         content:
-          multipart/form-data:
+          application/json:
             schema:
               type: object
               properties:

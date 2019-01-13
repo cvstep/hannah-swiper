@@ -19,7 +19,7 @@
 const _ = require('lodash');
 const mongoose = require('mongoose');
 const config =  require('./index');
-
+console.log(config.dbConnString)
 mongoose.connect(config.dbConnString, { useNewUrlParser: true } );
 
 const db = mongoose.connection;
@@ -30,3 +30,4 @@ db.once('open', function() {
 
 
 module.exports = {};
+

@@ -8,7 +8,7 @@ module.exports = {
      * summary: Get list of countries and country codes
      * description: This function returns the list of countries and country codes
 
-     * parameters: 
+     * parameters:
      * produces: application/json
      * responses: 200, default
      */

@@ -6,7 +6,7 @@ var dataProvider = require('../../data/user/{userId}.js');
 module.exports = {
     /**
      * summary: Get User data by userId
-     * description: 
+     * description:
      * parameters: userId
      * produces: application/json
      * responses: 200, default
@@ -28,7 +28,7 @@ module.exports = {
     },
     /**
      * summary: Update user data by userId
-     * description: 
+     * description:
      * parameters: userId, userForm
      * produces: application/json
      * responses: 200
@@ -49,3 +49,4 @@ module.exports = {
         });
     }
 };
+

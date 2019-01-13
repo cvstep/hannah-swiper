@@ -22,7 +22,7 @@ webinars
              */
 
             Mockgen().responses({
-                path: '/states',
+                path: '/status',
                 operation: 'get',
                 response: '200'
             }, callback);

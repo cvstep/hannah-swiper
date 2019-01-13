@@ -6,7 +6,7 @@ var Mockgen = require('../mockgen.js');
 module.exports = {
     /**
      * summary: Get User data by userId
-     * description: 
+     * description:
      * parameters: userId
      * produces: application/json
      * responses: 200, default
@@ -18,6 +18,8 @@ module.exports = {
              * Using mock data generator module.
              * Replace this by actual data for the api.
              */
+            //callback(false, {t:"fk"});
+            //returnb
             Mockgen().responses({
                 path: '/user/{userId}',
                 operation: 'get',
@@ -29,6 +31,7 @@ module.exports = {
              * Using mock data generator module.
              * Replace this by actual data for the api.
              */
+            return {}
             Mockgen().responses({
                 path: '/user/{userId}',
                 operation: 'get',
@@ -38,7 +41,7 @@ module.exports = {
     },
     /**
      * summary: Update user data by userId
-     * description: 
+     * description:
      * parameters: userId, userForm
      * produces: application/json
      * responses: 200
